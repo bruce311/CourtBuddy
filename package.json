@@ -3,12 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "async": "2.6.0",
-    "knex": "0.14.4",
-    "mysql": "2.15.0",
-    "prompt": "1.0.0",
     "@babel/core": "7.1.0",
     "@svgr/webpack": "2.4.1",
+    "async": "2.6.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "9.0.0",
     "babel-jest": "23.6.0",
@@ -18,6 +15,7 @@
     "bfj": "6.1.1",
     "case-sensitive-paths-webpack-plugin": "2.1.2",
     "chalk": "2.4.1",
+    "concurrently": "^4.0.1",
     "css-loader": "1.0.0",
     "dotenv": "6.0.0",
     "dotenv-expand": "4.2.0",
@@ -36,13 +34,16 @@
     "jest": "23.6.0",
     "jest-pnp-resolver": "1.0.1",
     "jest-resolve": "23.6.0",
+    "knex": "0.14.4",
     "mini-css-extract-plugin": "0.4.3",
+    "mysql": "2.15.0",
     "optimize-css-assets-webpack-plugin": "5.0.1",
     "pnp-webpack-plugin": "1.1.0",
     "postcss-flexbugs-fixes": "4.1.0",
     "postcss-loader": "3.0.0",
     "postcss-preset-env": "6.0.6",
     "postcss-safe-parser": "4.0.1",
+    "prompt": "1.0.0",
     "react": "^16.5.2",
     "react-app-polyfill": "^0.1.3",
     "react-dev-utils": "^6.0.4",
@@ -58,7 +59,9 @@
     "workbox-webpack-plugin": "3.6.2"
   },
   "scripts": {
-    "start": "node scripts/start.js",
+    "start": "concurrently \"node scripts/start.js\" \"node server.js\"",
+    "start-site": "node scripts/start.js",
+    "start-server": "node server.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js"
   },
@@ -112,5 +115,34 @@
       "react-app"
     ]
   },
-  "proxy": "http://localhost:8080/"
+  "proxy": "http://localhost:8080/",
+  "cloud-repo-tools": {
+    "requiresKeyFile": true,
+    "requiresProjectId": true,
+    "test": {
+      "app": {
+        "requiredEnvVars": [
+          "SQL_USER",
+          "SQL_PASSWORD",
+          "SQL_DATABASE",
+          "SQL_PORT",
+          "INSTANCE_CONNECTION_NAME"
+        ],
+        "msg": "Last 10 visits:",
+        "substitutions": "YOUR_SQL_USER=$SQL_USER,YOUR_SQL_PASSWORD=$SQL_PASSWORD,YOUR_SQL_DATABASE=$SQL_DATABASE,YOUR_INSTANCE_CONNECTION_NAME=$INSTANCE_CONNECTION_NAME",
+        "args": [
+          "server.js"
+        ]
+      },
+      "build": {
+        "requiredEnvVars": [
+          "SQL_USER",
+          "SQL_PASSWORD",
+          "SQL_DATABASE",
+          "SQL_PORT",
+          "INSTANCE_CONNECTION_NAME"
+        ]
+      }
+    }
+  }
 }

@@ -70,8 +70,8 @@ app.get("/api/courts", (req, res) => {
         .from('courts')
         .select('id', 'name').then(results => {
             console.log(results)
+            res.json(results);
         })
-    res.send("done")
 })
 
 const PORT = process.env.PORT || 8080;
