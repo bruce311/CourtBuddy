@@ -9,11 +9,9 @@ const knex = connect();
 
 function connect() {
     const config = {
-        user: 'testUser',
-        password: 'test1234!@#$',
-        host: '127.0.0.1',
-        port: '3307',
-        database: 'courts'
+        user: process.env.SQL_USER,
+        password: process.env.SQL_PASSWORD,
+        database: process.env.SQL_DATABASE
     };
 
     if (process.env.INSTANCE_CONNECTION_NAME && process.env.NODE_ENV === 'production') {
@@ -40,7 +38,6 @@ app.get("/api/create/:id", function (req, res) {
             })
         .then(() => {
             console.log(`Successfully created ${tableName} table.`);
-            return knex.destroy();
         })
         .catch((err) => {
             console.error(`Failed to create ${tableName} table:`, err);
@@ -51,30 +48,12 @@ app.get("/api/create/:id", function (req, res) {
     res.send("done")
 })
 
-// change to POST
-app.get("/api/add/courts/:name", function (req, res) {
-    knex('courts')
-    .insert({ name: req.params.name })
-    .then(() => {
-        console.log(`Successful insert.`);
-        return knex.destroy();
-    })
-    .catch((err) => {
-        console.error(`Failed to insert:`, err);
-        if (knex) {
-            knex.destroy();
-        }
-    });
-    res.send("done")
-})
-
 //post
 app.post("/api/add/courts/:name", function (req, res) {
     knex('courts')
     .insert({ name: req.params.name })
     .then(() => {
         console.log(`Successful insert.`);
-        return knex.destroy();
     })
     .catch((err) => {
         console.error(`Failed to insert:`, err);
@@ -82,7 +61,7 @@ app.post("/api/add/courts/:name", function (req, res) {
             knex.destroy();
         }
     });
-    res.redirect("/")
+    res.json("done")
 })
 
 

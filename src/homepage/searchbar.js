@@ -11,11 +11,7 @@ class Courtslist extends React.Component {
     componentDidMount() {
         fetch('/api/courts', {
             method: "GET",
-            url: `https://courtbuddy-123456.appspot.com/`,
-            credentials: 'include',
-            headers: {
-                Accept: 'application/json',
-            }
+            credentials: 'include'
         })
         .then((response) => {
           return response.json();
