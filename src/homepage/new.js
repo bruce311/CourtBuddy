@@ -41,7 +41,7 @@ import React, { Component } from 'react';
         
         fetch("/api/add/courts/", {
             method: "POST",
-            // url: `https://courtbuddy-123456.appspot.com/`,
+            url: `https://courtbuddy-123456.appspot.com/`,
             credentials: 'include',
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
