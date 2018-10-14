@@ -27,11 +27,11 @@ mysql -u <USERNAME> -p --host 127.0.0.1
 
 ## Deployment to Google App Engine
 
-Create a file called `app.standard.yaml` with env variables filled in for your MySQL database, based on the template in `app.yaml`
+Create a file called `app.yaml` with env variables filled in for your MySQL database, based on the template in `app.standard.yaml`
 
 Deploy and Launch
 ```shell
-gcloud app deploy app.standard.yaml
+gcloud app deploy
 gcloud app browse
 ```
 

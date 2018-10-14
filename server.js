@@ -68,7 +68,7 @@ app.get("/api/add/courts", function (req, res) {
 app.get("/api/courts", (req, res) => {
     knex
         .from('courts')
-        .select('id', 'name').then(results => {
+        .select('name', 'image', 'comments').then(results => {
             console.log(results)
             res.json(results);
         })
