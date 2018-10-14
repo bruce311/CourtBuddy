@@ -51,7 +51,7 @@ app.get("/api/create/:id", function (req, res) {
 //post
 app.post("/api/add/courts/:name", function (req, res) {
     knex('courts')
-    .insert({ name: req.params.name })
+    .insert({ name: req.params.name})
     .then(() => {
         console.log(`Successful insert.`);
     })

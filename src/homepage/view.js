@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import Courtslist from './searchbar';
 import Newcourt from './new';
-
+import './homepage.css';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 export const View = () => {
     return(
         <Router>
         <div>
-            <div className = "search-bar"> 
+            <div> 
                 <button>
                     <Link to="/search">Find a Basketball Court</Link>
                 </button>
@@ -17,7 +17,7 @@ export const View = () => {
                 </div>
             </div>
 
-            <div className = "new_court">
+            <div>
                 <button>
                     <Link to="/new">Add a New Court</Link>
                 </button>

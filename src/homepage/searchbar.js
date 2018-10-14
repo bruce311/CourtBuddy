@@ -26,17 +26,17 @@ class Courtslist extends React.Component {
     render() {
         return (
         <div>
-            <div>
+            <div className = "court-section">
             { this.state.courts && this.state.courts.map(item => (
                 <div>
-                <h2>
-                 {item.name} 
-                </h2>
-                 <img src = {item.image}/> 
-                 <p>
-                 {item.comments}
-                 </p>                 
-               </div>
+                    <h2>
+                    {item.name} 
+                    </h2>
+                    <img src = {item.image}/> 
+                    <p>
+                    {item.comments}
+                    </p>                 
+                </div>
             ))}
             </div>
         </div>

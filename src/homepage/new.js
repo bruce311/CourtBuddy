@@ -60,31 +60,31 @@ import React, { Component } from 'react';
   
     render() {
       return (
-        <form onSubmit={this.handleSubmit}>
-            <div>
+        <form onSubmit={this.handleSubmit} classNames = "form-style">
+            <div className = "input-style">
                 <label>
                     Name:
                     <input type="text" value={this.state.name} onChange={this.handleChangeName} />
                 </label>
             </div> 
 
-            <div>
+            <div className = "input-style">
                 <label>
                 Image:
                 <input type="text" value={this.state.image} onChange={this.handleChangeImage} />
             </label>
             </div>
             
-        <div>
-            <label>
-            Comments:
-            <textarea rows="5" cols="20" type="text" value={this.state.comments} onChange={this.handleChangeComments}/>
-            
-            </label>
-        </div>
+            <div className = "input-style">
+                <label>
+                Comments:
+                <textarea rows="5" cols="20" type="text" value={this.state.comments} onChange={this.handleChangeComments}/>
+                
+                </label>
+            </div>
           
 
-          <input type="submit" value="Submit"/>
+          <input className = "submit-buttom" type="submit" value="Submit"/>
         </form>
       );
     }
