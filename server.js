@@ -5,6 +5,14 @@ const Knex = require('knex');
 const app = express();
 app.enable('trust proxy');
 
+var bodyParser = require('body-parser')
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+})); 
+
+app.use(express.json());  
+
 const knex = connect();
 
 function connect() {
@@ -49,9 +57,9 @@ app.get("/api/create/:id", function (req, res) {
 })
 
 //post
-app.post("/api/add/courts/:name", function (req, res) {
+app.post("/api/add/courts", function (req, res) {
     knex('courts')
-    .insert({ name: req.params.name })
+    .insert({ ...req.body })
     .then(() => {
         console.log(`Successful insert.`);
     })
