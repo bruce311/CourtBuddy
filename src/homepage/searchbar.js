@@ -1,18 +1,52 @@
 import React, { Component } from 'react';
 
-export const searchbar = () => {
-    return ( 
-    <div>
-        <form>
+class Courtslist extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        courts: []
+      };
+    }
+
+    componentDidMount() {
+        fetch('/api/courts', {
+            method: "GET",
+            url: `https://courtbuddy-123456.appspot.com/`,
+            credentials: 'include',
+            headers: {
+                Accept: 'application/json',
+            }
+        })
+        .then((response) => {
+          return response.json();
+        })
+        .then((myJson) => {
+            this.setState({
+                courts: myJson
+            })
+        });  
+    }
+
+    render() {
+        return (
+        <div>
             <div>
-                <input className="search-input" type="text" name="search" placeholder="Enter location"/>
+            { this.state.courts && this.state.courts.map(item => (
+                <div>
+                <h2>
+                 {item.name} 
+                </h2>
+                 <img src = {item.image}/> 
+                 <p>
+                 {item.comments}
+                 </p>                 
+               </div>
+            ))}
             </div>
-            <div>
-                <button>Search</button>
-            </div>
-        </form>
-    </div>)
-  };
+        </div>
+        );
+    }
+  }
   
 
-
+  export default Courtslist 

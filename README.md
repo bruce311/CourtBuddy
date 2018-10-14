@@ -13,7 +13,7 @@ Filling in environment variables, run:
 ```shell
 export SQL_USER=[YOUR_SQL_USER]
 export SQL_PASSWORD=[YOUR_SQL_PASSWORD]
-export SQL_DATABASE=[YOUR_SQL_DATABASE]
+export SQL_DATABASE=[YOUR_SQL_DATABASE] 
 npm install
 npm start
 ```

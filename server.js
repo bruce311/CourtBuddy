@@ -9,9 +9,11 @@ const knex = connect();
 
 function connect() {
     const config = {
-        user: process.env.SQL_USER,
-        password: process.env.SQL_PASSWORD,
-        database: process.env.SQL_DATABASE
+        user: 'testUser',
+        password: 'test1234!@#$',
+        host: '127.0.0.1',
+        port: '3307',
+        database: 'courts'
     };
 
     if (process.env.INSTANCE_CONNECTION_NAME && process.env.NODE_ENV === 'production') {
@@ -28,6 +30,7 @@ function connect() {
 }
 
 
+//get all the courts
 app.get("/api/create/:id", function (req, res) {    
     const tableName = req.params.id;
     knex.schema.createTable(tableName,
@@ -49,9 +52,9 @@ app.get("/api/create/:id", function (req, res) {
 })
 
 // change to POST
-app.get("/api/add/courts", function (req, res) { 
+app.get("/api/add/courts/:name", function (req, res) {
     knex('courts')
-    .insert({ name: 'Intramural Sports Building' })
+    .insert({ name: req.params.name })
     .then(() => {
         console.log(`Successful insert.`);
         return knex.destroy();
@@ -65,11 +68,42 @@ app.get("/api/add/courts", function (req, res) {
     res.send("done")
 })
 
+//post
+app.post("/api/add/courts/:name", function (req, res) {
+    knex('courts')
+    .insert({ name: req.params.name })
+    .then(() => {
+        console.log(`Successful insert.`);
+        return knex.destroy();
+    })
+    .catch((err) => {
+        console.error(`Failed to insert:`, err);
+        if (knex) {
+            knex.destroy();
+        }
+    });
+    res.redirect("/")
+})
+
+
+app.get("/api/info/:name", function (req, res) { 
+    knex
+        .from('courts')
+        .select('id', 'name')
+        .where('name', req.params.name)
+        .then(results => {
+            console.log(results)
+            res.json(results);
+        })
+    });
+
+
 app.get("/api/courts", (req, res) => {
     knex
         .from('courts')
-        .select('id', 'name').then(results => {
+        .select('name', 'image', 'comments').then(results => {
             console.log(results)
+            console.log(JSON.stringify(results))
             res.json(results);
         })
 })

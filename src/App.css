@@ -22,9 +22,25 @@
   color: #61dafb;
 }
 
-.search-input{
+.form-style{
   align-items: center;
 }
+
+.form-input{
+
+}
+
+.search-bar{
+  color: white;
+}
+
+
+.new_court{
+  color: white;
+}
+
+
+
 
 /* @keyframes App-logo-spin {
   from {
