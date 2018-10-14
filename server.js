@@ -5,6 +5,14 @@ const Knex = require('knex');
 const app = express();
 app.enable('trust proxy');
 
+var bodyParser = require('body-parser')
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+})); 
+
+app.use(express.json());  
+
 const knex = connect();
 
 function connect() {
@@ -28,6 +36,7 @@ function connect() {
 }
 
 
+//get all the courts
 app.get("/api/create/:id", function (req, res) {    
     const tableName = req.params.id;
     knex.schema.createTable(tableName,
@@ -37,7 +46,6 @@ app.get("/api/create/:id", function (req, res) {
             })
         .then(() => {
             console.log(`Successfully created ${tableName} table.`);
-            return knex.destroy();
         })
         .catch((err) => {
             console.error(`Failed to create ${tableName} table:`, err);
@@ -48,13 +56,12 @@ app.get("/api/create/:id", function (req, res) {
     res.send("done")
 })
 
-// change to POST
-app.get("/api/add/courts", function (req, res) { 
+//post
+app.post("/api/add/courts", function (req, res) {
     knex('courts')
-    .insert({ name: 'Intramural Sports Building' })
+    .insert({ ...req.body })
     .then(() => {
         console.log(`Successful insert.`);
-        return knex.destroy();
     })
     .catch((err) => {
         console.error(`Failed to insert:`, err);
@@ -62,14 +69,28 @@ app.get("/api/add/courts", function (req, res) {
             knex.destroy();
         }
     });
-    res.send("done")
+    res.json("done")
 })
+
+
+app.get("/api/info/:name", function (req, res) { 
+    knex
+        .from('courts')
+        .select('id', 'name')
+        .where('name', req.params.name)
+        .then(results => {
+            console.log(results)
+            res.json(results);
+        })
+    });
+
 
 app.get("/api/courts", (req, res) => {
     knex
         .from('courts')
-        .select('id', 'name').then(results => {
+        .select('name', 'image', 'comments').then(results => {
             console.log(results)
+            console.log(JSON.stringify(results))
             res.json(results);
         })
 })
